@@ -1,21 +1,18 @@
 package com.wangjstu.springboothelloproject.controllers;
 
+
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class HelloControllerTests {
 
@@ -27,13 +24,13 @@ public class HelloControllerTests {
     @Autowired
     private TestRestTemplate template;
 
-    @Before
+    @BeforeEach
     public void setUp() throws MalformedURLException {
         this.base = new URL("http://127.0.0.1:" + port + "/");
     }
 
     @Test
-    public void getHello() throws Exception {
+    public void getHello() {
         ResponseEntity<String> response = template.getForEntity(this.base.toString(), String.class);
         Assertions.assertThat(response.getBody().equals("Hello Spring Boot"));
     }
