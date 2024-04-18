@@ -17,8 +17,15 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
+        distribution: 'adopt'
         java-version: '8'
-
+    
+    - name: Setup Maven
+      uses: stCarolas/setup-maven@v5
+      with:
+        # Version Spec of the version to use.  Examples: 10.x, 10.15.1, >=10.15.0
+        maven-version: 3.8.2
+  
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
