@@ -30,8 +30,10 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Build Docker image
-      run: |
-          docker build -t my-spring-boot-app .
-          docker tag my-spring-boot-app wangjstu/my-spring-boot-app
-          docker push wangjstu/my-spring-boot-app
-    
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: wangjstu/spring-boot-hello
+        tags: latest
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
