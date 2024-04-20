@@ -35,5 +35,5 @@ jobs:
         image: typoway/spring-boot-hello
         tags: latest
         registry: docker.io
-        username: wangjstu@gmail.com
-        password: 2Y#7NQ&P2m$A.DK
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
