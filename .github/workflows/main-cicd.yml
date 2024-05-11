@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '8'
+    
+    - name: Setup Maven
+      uses: stCarolas/setup-maven@v5
+      with:
+        # Version Spec of the version to use.  Examples: 10.x, 10.15.1, >=10.15.0
+        maven-version: 3.8.2
+  
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
+    - name: Build Docker image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: typoway/spring-boot-hello
+        tags: latest
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
